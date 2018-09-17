@@ -1,8 +1,15 @@
 import math
 import numpy
 from swarm import Swarm
+from particle import Particle
+import random
 
-#Leitura do arquivo de coordenadas
+
+NPARTICLES = 5
+ACELERATION1 = 1
+ACELERATION2 = 1
+
+#Leitura do arquivo de coordenadas, retorna vetor de cidades
 def tsp_reader(file):
     line = ""
     while(line != "EOF"):
@@ -22,7 +29,7 @@ def tsp_reader(file):
                 m[i].append(city_y)
     return m
 
-
+#Cria matriz de distancias a partir do vetor de cidades
 def create_matrix(arr):
     mat = [[0 for x in range(len(arr))] for y in range(len(arr))]
     for i in range(0,len(arr)-1):
@@ -31,11 +38,11 @@ def create_matrix(arr):
     
     return mat
 
-
+#Calcula distancia entre duas cidades
 def calc_distancia(x1,y1,x2,y2):
     return round(math.sqrt(pow(x1-x2,2)+pow(y1-y2,2)),2)
     
-
+#Calcula custo de uma permutacao
 def func_obj(matriz,permutacao):
     custo = 0
     for i in range(0,len(permutacao)-1):
@@ -48,22 +55,19 @@ def func_obj(matriz,permutacao):
 
 
 tspFile = open("29.tsp","r")
-# print tsp_reader(tspFile)
+vet_cidades = tsp_reader(tspFile)
+matrix = create_matrix(vet_cidades)
 
+# s = Swarm(NPARTICLES,ACELERATION1,ACELERATION2)
 
-data = tsp_reader(tspFile)
-matrix = create_matrix(data)
-permutacao = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
-# print func_obj(matrix,permutacao)
-s = Swarm(5,2,1,1)
-s.particles[0].setPosition([1,2,3,4,5,6,7,8,9,10,11,12,13,14])
-s.particles[0].evaluateFitness(matrix)
-print s.particles[0].speed
-s.updateSpeeds()
-print s.particles[0].speed
-print s.particles[0].position
-s.particles[0].swap([2,5])
-print s.particles[0].position
+# s.particles[0].setPosition([1,2,3,4,5,6,7,8,9,10,11,12,13,14])
+# s.particles[0].evaluateFitness(matrix)
+# print s.particles[0].speed
+# s.updateSpeeds()
+# print s.particles[0].speed
+# print s.particles[0].position
+# s.particles[0].swap([2,5])
+# print s.particles[0].position
 
 
 # print s.particles[1].getId()
