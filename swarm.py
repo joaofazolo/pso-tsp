@@ -1,8 +1,9 @@
 from particle import Particle
+from random import shuffle
 
 #Classe swarm
 class Swarm:
-    bestPosition = []
+    bestPosition = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
     bestFitness = 99999
     particles = []
 
@@ -10,8 +11,7 @@ class Swarm:
         self.acceleration1 = acceleration1
         self.acceleration2 = acceleration2
         for i in range(nParticles):
-            p = Particle()
-            p.setId(i)
+            p = Particle(i)
             self.particles.append(p)
     
     #Atualizada velocidade das particulas
@@ -22,3 +22,36 @@ class Swarm:
     #Retorna uma particula pelo id
     def getParticle(self,id):
         return self.particles[id]
+
+    def updatePositions(self):
+        for particle in self.particles:
+            particle.updatePosition()
+
+    def evaluateFitness(self,matrix):
+        for particle in self.particles:
+            particle.evaluateFitness(matrix)
+
+    def updateBests(self):
+        bestfitness = self.bestFitness
+        bestposition = self.bestPosition
+        for particle in self.particles:
+            particle.updateBest()
+            if(particle.getBestFitness() < bestfitness):
+                bestposition = particle.getBestPosition()
+                bestfitness = particle.getBestFitness()
+        print "Global best fitness updated from " + str(self.bestFitness) + " to " + str(bestfitness)
+        # print "Global best position updated from " + str(self.bestPosition) + " to " + str(bestposition)
+        self.bestPosition = bestposition
+        self.bestFitness = bestfitness
+
+    def initParticles(self,matrix):
+        for particle in self.particles:
+            particle.setPosition([1,2,3,4,5,6,7,8,9,10,11,12,13,14])
+
+    def randomPosition(self,matrix):
+        for particle in self.particles:
+            init = [i+1 for i in range(len(matrix))]
+            shuffle(init)
+            particle.setPosition(init)
+            particle.bestPosition = init
+        
