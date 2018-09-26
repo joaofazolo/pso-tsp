@@ -39,14 +39,13 @@ class Particle:
         # print "Evaluating fitness of particle " + str(self.id) + ": " + str(self.fitness)
     
     #Atualiza velocidade
-    def updateSpeed(self,inertia,acceleration1,acceleration2,globalBest):
+    def updateSpeed(self,acceleration1,acceleration2,globalBest):
         # print "Updating speed of particle " + str(self.id)
         oldSpeed = self.speed
 
         newSpeed = []
         
         dice = random.random()
-        r0 = random.random()/2
         r1 = random.random()/2
         r2 = random.random()/2
         newSpeed.extend(oldSpeed)

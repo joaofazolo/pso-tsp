@@ -5,8 +5,8 @@ from particle import Particle
 import random
 from sys import argv
 
-def pso(matrix,nParticles,inertia,ac1,ac2,nIter):
-    swarm = Swarm(nParticles,inertia,ac1,ac2)
+def pso(matrix,nParticles,ac1,ac2,nIter):
+    swarm = Swarm(nParticles,ac1,ac2)
     swarm.randomPosition(matrix)
     count = 0
     for i in range(0,nIter-1):
