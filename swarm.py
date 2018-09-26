@@ -3,13 +3,14 @@ from random import shuffle
 
 #Classe swarm
 class Swarm:
-    bestPosition = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
-    bestFitness = 99999
+    bestPosition = []
+    bestFitness = 999999
     particles = []
 
-    def __init__(self,nParticles,acceleration1,acceleration2):
+    def __init__(self,nParticles,inertia,acceleration1,acceleration2):
         self.acceleration1 = acceleration1
         self.acceleration2 = acceleration2
+        self.inertia = inertia
         for i in range(nParticles):
             p = Particle(i)
             self.particles.append(p)
@@ -17,7 +18,7 @@ class Swarm:
     #Atualizada velocidade das particulas
     def updateSpeeds(self):
         for particle in self.particles:
-            particle.updateSpeed(self.acceleration1,self.acceleration2,self.bestPosition)
+            particle.updateSpeed(self.inertia,self.acceleration1,self.acceleration2,self.bestPosition)
 
     #Retorna uma particula pelo id
     def getParticle(self,id):
@@ -53,5 +54,6 @@ class Swarm:
             init = [i+1 for i in range(len(matrix))]
             shuffle(init)
             particle.setPosition(init)
+            print "Particle "+str(particle.id)+" starting at "+str(particle.position)
             particle.bestPosition = init
         
