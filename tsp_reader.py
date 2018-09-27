@@ -4,9 +4,9 @@ import math
 inf = 999999
 
 #Leitura do arquivo de coordenadas, retorna vetor de cidades
-def tsp_reader():
+def tsp_reader(name):
     try:
-        file = open(argv.pop()+".tsp","r")
+        file = open(name+".tsp","r")
     except:
         raise Exception("Arquivo nao encontrado")
     

@@ -5,14 +5,14 @@ from particle import Particle
 import random
 from sys import argv
 
-def pso(matrix,nParticles,ac1,ac2,nIter):
+def pso(matrix,nParticles,ac1,ac2,nIter,nStuck):
     swarm = Swarm(nParticles,ac1,ac2)
     swarm.randomPosition(matrix)
     count = 0
-    for i in range(0,nIter-1):
-        if(count > 0.3*nIter):
+    for i in range(0,nIter):
+        if(count == nStuck):
             break
-        print "Iteration " + str(i)
+        # print "Iteration " + str(i+1)
         oldFitness = swarm.bestFitness
         swarm.evaluateFitness(matrix)
         swarm.updateBests()
@@ -23,7 +23,7 @@ def pso(matrix,nParticles,ac1,ac2,nIter):
             count = count+1
         else:
             count = 0
-        print
+        # print
     return (swarm.bestPosition, round(swarm.bestFitness,2))
 
     

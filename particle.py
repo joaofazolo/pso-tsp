@@ -3,9 +3,9 @@ import random
 #Classe particula
 class Particle:
     bestPosition = []
-    bestFitness = 999999
+    bestFitness = 9999999999999999
     position = []
-    fitness = 999999
+    fitness = 9999999999999999
     speed = []
 
     def __init__(self,id):

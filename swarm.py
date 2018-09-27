@@ -4,7 +4,7 @@ from random import shuffle
 #Classe swarm
 class Swarm:
     bestPosition = []
-    bestFitness = 999999
+    bestFitness = 9999999999999999999
     particles = []
 
     def __init__(self,nParticles,acceleration1,acceleration2):
@@ -39,7 +39,7 @@ class Swarm:
             if(particle.getBestFitness() < bestfitness):
                 bestposition = particle.getBestPosition()
                 bestfitness = particle.getBestFitness()
-        print "Global best fitness updated from " + str(self.bestFitness) + " to " + str(bestfitness)
+        # print "Global best fitness updated from " + str(self.bestFitness) + " to " + str(bestfitness)
         # print "Global best position updated from " + str(self.bestPosition) + " to " + str(bestposition)
         self.bestPosition = bestposition
         self.bestFitness = bestfitness
@@ -49,6 +49,6 @@ class Swarm:
             init = [i+1 for i in range(len(matrix))]
             shuffle(init)
             particle.setPosition(init)
-            print "Particle "+str(particle.id)+" starting at "+str(particle.position)
+            # print "Particle "+str(particle.id)+" starting at "+str(particle.position)
             particle.bestPosition = init
-        
+    
