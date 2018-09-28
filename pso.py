@@ -17,13 +17,12 @@ def pso(matrix,nParticles,ac1,ac2,nIter,nStuck):
         swarm.evaluateFitness(matrix)
         swarm.updateBests()
         swarm.updateSpeeds()
-        swarm.updatePositions()
+        swarm.updatePositions(matrix)
         newFitness = swarm.bestFitness
         if(oldFitness == newFitness):
             count = count+1
         else:
             count = 0
-        # print
     return (swarm.bestPosition, round(swarm.bestFitness,2))
 
     

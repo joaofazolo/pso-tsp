@@ -23,32 +23,29 @@ class Swarm:
     def getParticle(self,id):
         return self.particles[id]
 
-    def updatePositions(self):
+    def updatePositions(self,matrix):
         for particle in self.particles:
             particle.updatePosition()
+            particle.evaluateFitnessBest(matrix)
 
     def evaluateFitness(self,matrix):
         for particle in self.particles:
             particle.evaluateFitness(matrix)
+            # particle.evaluateFitnessBest(matrix)
 
     def updateBests(self):
         bestfitness = self.bestFitness
-        bestposition = self.bestPosition
+        bestposition = self.bestPosition[:]
         for particle in self.particles:
             particle.updateBest()
-            if(particle.getBestFitness() < bestfitness):
-                bestposition = particle.getBestPosition()
-                bestfitness = particle.getBestFitness()
-        # print "Global best fitness updated from " + str(self.bestFitness) + " to " + str(bestfitness)
-        # print "Global best position updated from " + str(self.bestPosition) + " to " + str(bestposition)
-        self.bestPosition = bestposition
+            if(particle.bestFitness < bestfitness):
+                bestposition = particle.bestPosition[:]
+                bestfitness = particle.bestFitness
+        self.bestPosition = bestposition[:]
         self.bestFitness = bestfitness
 
     def randomPosition(self,matrix):
         for particle in self.particles:
             init = [i+1 for i in range(len(matrix))]
             shuffle(init)
-            particle.setPosition(init)
-            # print "Particle "+str(particle.id)+" starting at "+str(particle.position)
-            particle.bestPosition = init
-    
+            particle.position = init[:]

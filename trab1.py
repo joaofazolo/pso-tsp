@@ -5,19 +5,19 @@ from time import time
 from sys import argv
 
 #10-50
-NPARTICLES = 30
+NPARTICLES = 50
 
 #0.0 - 0.5
-ACCELERATION1 = 0.4
+ACCELERATION1 = 0.1
 
 #0.0 - 0.5
-ACCELERATION2 = 0.4
+ACCELERATION2 = 0.1
 
 #50-150
-NITERATIONS = 150
+NITERATIONS = 200
 
 #0-100
-NSTUCKEDITERATIONS = 30
+NSTUCKEDITERATIONS = 100
 
 try:
     matrix = tsp_reader(argv[1])

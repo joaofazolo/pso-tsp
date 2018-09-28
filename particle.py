@@ -38,34 +38,40 @@ class Particle:
         self.fitness = custo
         # print "Evaluating fitness of particle " + str(self.id) + ": " + str(self.fitness)
     
+    def evaluateFitnessBest(self,matriz):
+        permutacao = self.bestPosition
+        custo = 0
+        for i in range(0,len(permutacao)-1):
+            j = i+1
+            custo = custo + matriz[permutacao[i]-1][permutacao[j]-1]
+
+        custo = custo + matriz[permutacao[-1]-1][permutacao[0]-1]
+        self.bestFitness = custo
+
     #Atualiza velocidade
     def updateSpeed(self,acceleration1,acceleration2,globalBest):
-        # print "Updating speed of particle " + str(self.id)
         oldSpeed = self.speed
 
         newSpeed = []
         
         dice = random.random()
-        r1 = random.random()/2
-        r2 = random.random()/2
-        newSpeed.extend(oldSpeed)
 
-        #Componente local
-        if(r1+acceleration1 >= dice):
-            localComponent = self.diff(self.bestPosition)
-            # print "Local component: " + str(localComponent)
-            if(localComponent):
-                newSpeed.extend(localComponent)
+        localComponent = self.diff(self.bestPosition)
+        if(localComponent):
+            for swap in localComponent:
+                r1 = (random.choice(range(0,int((10-((acceleration1*10)-1))))))
+                if(float(r1)/10 >= dice):
+                    newSpeed.append(swap)
 
-        #Componente global
-        if(r1+acceleration1 >= dice):
-            globalComponent = self.diff(globalBest)
-            # print "Global component: " + str(globalComponent)
-            if(globalComponent):
-                newSpeed.extend(globalComponent)
-        # print "New speed: " + str(newSpeed)
+        globalComponent = self.diff(globalBest)
+        # print "globalComponent: "+ str(globalComponent)
+        if(globalComponent):
+            for swap in globalComponent:
+                r2 = (random.choice(range(0,int((10-((acceleration2*10)-1))))))
+                if(float(r2)/10 >= dice):
+                    newSpeed.append(swap)
+
         self.speed = newSpeed
-        # print "speed: " + str(self.speed)
 
     def updatePosition(self):
         for swap in self.speed:
@@ -83,7 +89,6 @@ class Particle:
     def diff(self,p):
         diff = []
         for i in range(len(p)):
-            # print str(p[i]) + " , " + str(self.position[i])
             if(p[i] != self.position[i]):
                 for j in range(len(self.position)):
 
@@ -94,5 +99,7 @@ class Particle:
                 
     def updateBest(self):
         if(self.fitness < self.bestFitness):
-            self.bestFitness = self.fitness
-            self.bestPosition = self.position
+            bestPosition = self.position[:]
+            bestFitness = self.fitness
+            self.bestFitness = bestFitness
+            self.bestPosition = bestPosition
